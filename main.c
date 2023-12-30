@@ -2,38 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-typedef struct node {
-    int val;
-    struct node *next;
-} node;
-node *head = NULL;
-void add_element(node** head, int val) {
-    node* newNode = malloc(sizeof(node));
-    if (newNode == NULL) {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(EXIT_FAILURE);
-    }
-    newNode->val = val;
-    newNode->next = NULL;
-
-    if (*head == NULL) {
-        *head = newNode;
-    } else {
-        node* current = *head;
-        while (current->next != NULL) {
-            current = current->next;
-        }
-        current->next = newNode;
-    }
-}
-void print_list(node* head) {
-    node* p = head;
-    while (p != NULL) {
-        printf("%d -> ", p->val);
-        p = p->next;
-    }
-    printf("NULL\n");
-}
+// Message au wassim: Ajouter ton code des liste chainné la. Le nom d'addition des element pour la list doivent etre add_element()
 void build_linked_list()
 {
     add_element(&head, 10);
