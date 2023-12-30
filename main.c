@@ -37,9 +37,7 @@ void add_element(node** head, int val) {
 
 node *head = NULL;
 
-//code tri liste par insertion
-#include <stdio.h>
-#include <stdlib.h>
+//code tri liste biderectionelle par insertion
 
 // Structure pour les nœuds de la liste doublement chaînée
 typedef struct Node {
@@ -95,7 +93,6 @@ void printList(Node* node) {
 }
 
 // main
-int main() {
     Node*  tete = NULL;
     int num_elements;
 
@@ -126,10 +123,8 @@ int main() {
         Node* temp =  tete;
          tete =  tete->next;
         free(temp);
-    }
-
-    return 0;
-}
+    } 
+//fin .
 
 void build_linked_list()
 {
