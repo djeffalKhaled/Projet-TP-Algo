@@ -44,6 +44,7 @@ void build_linked_list()
     add_element(&head, 7);
     add_element(&head, 9);
     add_element(&head, 1);
+    add_element(&head, 4);
 }
 typedef struct listGUI {
     Rectangle value;
