@@ -58,7 +58,7 @@ void printList(Node* node) {
     }
     printf("\n");
 }
-//lebérer la mémoire
+//libérer la mémoire
 void freeList(Node* head) {
     while (head != NULL) {
         Node* temp = head;
