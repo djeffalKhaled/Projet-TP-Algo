@@ -36,6 +36,101 @@ void add_element(node** head, int val) {
 
 
 node *head = NULL;
+
+//code tri liste par insertion
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure pour les nœuds de la liste doublement chaînée
+typedef struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+} Node;
+
+// Fonction pour créer  la liste
+ void cree(Node** tete_ref, int new_data) {
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    new_node->data = new_data;
+    new_node->next = NULL;
+
+    if (*tete_ref == NULL) {
+        new_node->prev = NULL;
+        *tete_ref = new_node;
+    } else {
+        Node* last = *tete_ref;
+        while (last->next != NULL) {
+            last = last->next;
+        }
+        last->next = new_node;
+        new_node->prev = last;
+    }
+}
+void triListe(Node* node){
+Node* Q = node->next ;
+     Node* p = node;
+      Node* R =p;
+      int temp;
+
+    while(Q!= NULL ){
+
+        temp=Q->data;
+        p=Q->prev;
+    while (p != NULL && temp < p->data) {
+    (p->next)->data = p->data;
+    R = p;
+    p = p->prev;
+}      if(R->data > temp){
+       R->data = temp;}
+        Q= Q->next ;
+    }
+}
+//  afficher la liste
+void printList(Node* node) {
+    while (node != NULL) {
+        printf("%d ", node->data);
+        node = node->next;
+    }
+    printf("\n");
+}
+
+// main
+int main() {
+    Node*  tete = NULL;
+    int num_elements;
+
+ // Demander le nombre d'éléments
+    printf("Entrez le nombre l'element  : ");
+    scanf("%d", &num_elements);
+
+    // Demander à l'utilisateur les valeurs pour chaque élément
+    for (int i = 0; i < num_elements; ++i) {
+        int value;
+        printf("Entrez la valeur pour  l'element %d : ", i + 1);
+        scanf("%d", &value);
+         cree(&tete, value);
+    }
+
+    // Afficher la liste
+    printf("Liste avant le tri par insertion : ");
+    printList(tete);
+
+   triListe(tete);
+
+ printf("liste apres tri insertion : ");
+  printList(tete);
+
+
+    // Libération de la mémoire
+    while ( tete != NULL) {
+        Node* temp =  tete;
+         tete =  tete->next;
+        free(temp);
+    }
+
+    return 0;
+}
+
 void build_linked_list()
 {
     // Elements of the linked list
