@@ -47,7 +47,7 @@ typedef struct Node {
 } Node;
 
 // Fonction pour créer  la liste
- void cree(Node** tete_ref, int new_data) {
+ void ajout_element(Node** tete_ref, int new_data) {
     Node* new_node = (Node*)malloc(sizeof(Node));
     new_node->data = new_data;
     new_node->next = NULL;
@@ -64,11 +64,11 @@ typedef struct Node {
         new_node->prev = last;
     }
 }
-void triListe(Node* node){
-Node* Q = node->next ;
+void tri_par_insertion(Node* node){
+     Node* Q = node->next ;
      Node* p = node;
-      Node* R =p;
-      int temp;
+     Node* R =p;
+     int temp;
 
     while(Q!= NULL ){
 
@@ -79,7 +79,7 @@ Node* Q = node->next ;
     R = p;
     p = p->prev;
 }      if(R->data > temp){
-       R->data = temp;}
+        R->data = temp;}
         Q= Q->next ;
     }
 }
@@ -105,23 +105,23 @@ void printList(Node* node) {
         int value;
         printf("Entrez la valeur pour  l'element %d : ", i + 1);
         scanf("%d", &value);
-         cree(&tete, value);
+        ajout_element(&tete, value);
     }
 
     // Afficher la liste
     printf("Liste avant le tri par insertion : ");
     printList(tete);
 
-   triListe(tete);
+    tri_par_insertion(tete); // tri la liste
 
- printf("liste apres tri insertion : ");
-  printList(tete);
+ printf("liste apres tri insertion : "); // affichage aprés le tri
+ printList(tete);
 
 
     // Libération de la mémoire
     while ( tete != NULL) {
         Node* temp =  tete;
-         tete =  tete->next;
+        tete =  tete->next;
         free(temp);
     } 
 //fin .
