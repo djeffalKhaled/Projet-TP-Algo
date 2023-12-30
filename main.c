@@ -1,49 +1,87 @@
 #include "raylib.h"
+#define RAYGUI_IMPLEMENTATION
+#include "raygui.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct node {
-    int val;
-    struct node* prev;
-    struct node* next;
-}node ;
-struct node* createNode(int val) {
-    node* newNode = (struct node*)malloc(sizeof(node));
-    newNode->val = val;
-    newNode->prev = NULL;
-    newNode->next = NULL;
-    return newNode;
-}
-void add_element(node** head, int val) {
-    node* newNode = createNode(val);
-    
-    if (*head == NULL) {
-        *head = newNode;
-    } else {
-        struct node* temp = *head;
-        while (temp->next != NULL) {
-            temp = temp->next;
+// Structure pour les nœuds de la liste doublement chaînée
+typedef struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+} Node;
+int totalElements;
+// Fonction pour créer  la liste
+ void ajout_element(Node** tete_ref, int new_data) {
+    Node* new_node = (Node*)malloc(sizeof(Node));
+    new_node->data = new_data;
+    new_node->next = NULL;
+
+    if (*tete_ref == NULL) {
+        new_node->prev = NULL;
+        *tete_ref = new_node;
+     }  else {
+        Node* last = *tete_ref;
+        while (last->next != NULL) {
+            last = last->next;
         }
-        temp->next = newNode;
-        newNode->prev = temp;
+        last->next = new_node;
+        new_node->prev = last;
+    }
+    totalElements++;
+}
+void tri_par_insertion(Node* node){
+     Node* Q = node->next ;
+     Node* p = node;
+     Node* R =p;
+     int temp;
+
+    while(Q!= NULL )
+    {
+
+        temp=Q->data;
+        p=Q->prev;
+    while (p != NULL && temp < p->data) {
+    (p->next)->data = p->data;
+    R = p;
+    p = p->prev;
+    }     
+        if(R->data > temp) {
+        R->data = temp;
+        }
+        Q= Q->next ;
+      }
+     }
+//  afficher la liste
+void printList(Node* node) {
+    while (node != NULL) {
+        printf("%d ", node->data);
+        node = node->next;
+    }
+    printf("\n");
+}
+//libérer la mémoire
+void freeList(Node* head) {
+    while (head != NULL) {
+        Node* temp = head;
+        head = head->next;
+        free(temp);
     }
 }
-// Message au wassim: Ajouter le trie par l'insertion la.
-// Vous pouvez remplacer le code "add_element" et "createNode" par votre propre code équivalent si vous le souhaitez. 
-// Ils sont là pour que mon interface fonctionne correctement.
+//fin .
 
+Node *head = NULL;
 
-node *head = NULL;
 void build_linked_list()
 {
     // Elements of the linked list
-    add_element(&head, 10);
-    add_element(&head, 5);
-    add_element(&head, 7);
-    add_element(&head, 9);
-    add_element(&head, 1);
-    add_element(&head, 4);
+    ajout_element(&head, 10);
+    ajout_element(&head, 5);
+    ajout_element(&head, 7);
+    ajout_element(&head, 9);
+    ajout_element(&head, 1);
+    ajout_element(&head, 4);
 }
 typedef struct listGUI {
     Rectangle value;
@@ -176,48 +214,58 @@ int main(void)
     Color nextColors = DARKBLUE;
     Color lastColors = DARKBLUE;
     bool canSort = false;
-    
     build_linked_list();
     repeat:
-    node* p = head;
+    Node* p = head;
     int i = 0; int j = 0;
     while (p != NULL)
     {
         char str[10];
-        sprintf(str, "%d", p->val);
+        sprintf(str, "%d", p->data);
         lists[i] = new_ListGUI(i * 100 + j, 130, str, valColors, nextColors, lastColors, LIGHTGRAY);
         j = j + 100;
         i++;
         p = p->next;
     }
-
+    
     // Buttons
-    Rectangle sortBounds = {800, 450, 300, 100};
-    Button sortButton = new_button(sortBounds, "Insertion Sort", BLUE, WHITE);
-    Rectangle addBounds = {450, 450, 300, 100};
-    Button addButton = new_button(addBounds, "Add Element", BLUE, WHITE);
-    Rectangle deleteBounds = {100, 450, 300, 100};
-    Button deleteButton = new_button(deleteBounds, "Delete Element", BLUE, WHITE);
+    Rectangle sortButton = {800, 450, 300, 100};
+    Rectangle addButton = {450, 450, 300, 100};
+    Rectangle deleteButton = {100, 450, 300, 100};
+    // Value Boxes
+    Rectangle addButtonValue = {450, 400, 300, 50};
+
     InitWindow(screenWidth, screenHeight, "Linked List Representation"); 
+    GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
     SetTargetFPS(24);
     while (!WindowShouldClose())
     {
-        if (IsKeyDown(KEY_SPACE)) {
-            add_element(&head, 20);
+        if (IsKeyDown(KEY_P)) {
+            ajout_element(&head, 20);
             screenWidth += 200;
             CloseWindow();
             goto repeat;
-        }
-        if (IsMouseOverButton(sortButton)) {
-            canSort = true;
         }
         BeginDrawing();
             
             ClearBackground(RAYWHITE);
             DrawText("-> Created in Raylib", 20, 10, 10, LIGHTGRAY);
-            DrawButton(sortButton);
-            DrawButton(addButton);
-            DrawButton(deleteButton);
+            if (GuiButton(sortButton, "Insertion Sort")) {
+                canSort = true;
+            }
+            // Add Element Button code
+            int elementValue;
+            GuiSpinner(addButtonValue, "", &elementValue, -100, 100, true);
+            if (GuiButton(addButton, "Add Element") && totalElements < 8) {
+                char str[10];
+                sprintf(str, "%d", elementValue);
+                DrawText(str, 30, 20, 20, LIGHTGRAY);
+                ajout_element(&head, elementValue);
+                screenWidth += 200;
+                CloseWindow();
+                goto repeat;
+            }
+            GuiButton(deleteButton, "Delete Element");
             for (int i = 0; i < sizeof(lists) / sizeof(lists[0]); i++)
             {
                 draw_ListGUI(&lists[i]);
@@ -225,25 +273,23 @@ int main(void)
             
             if (canSort)
             {
-                node *p1 = head;
-                node *p2 = head->next;
-                int i = 0;
-                Timer timer;
-                StartTimer(&timer, 2);
-                while (p1->next != NULL && p2 != NULL)
+                tri_par_insertion(head);
+                Rectangle deletion = {0, 0, 1300, 300};
+                DrawRectangleRec(deletion, RAYWHITE);
+                Node* p = head;
+                int i = 0; int j = 0;
+                while (p != NULL)
                 {
-                    
-                    if (p1->val > p2->val) {
-                        recolor(i, GREEN, DARKGREEN, DARKGREEN);
-                        recolor(i+1, GREEN, DARKGREEN, DARKGREEN);
-                        swap_Position(i, i+1);
-                        int temp = p1->val;
-                        p1->val = p2->val;
-                        p2->val = temp;
-                    }
-                    p1 = p1->next;
-                    p2 = p2->next;
+                    char str[10];
+                    sprintf(str, "%d", p->data);
+                    lists[i] = new_ListGUI(i * 100 + j, 130, str, GREEN, DARKGREEN, DARKGREEN, LIGHTGRAY);
+                    j = j + 100;
                     i++;
+                    p = p->next;
+                }
+                for (i = 0; i < sizeof(lists) / sizeof(lists[0]); i++)
+                {
+                    draw_ListGUI(&lists[i]);
                 }
             }
         EndDrawing();
