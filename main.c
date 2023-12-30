@@ -152,59 +152,6 @@ void recolor(int i, Color valueColor, Color nextColor, Color lastColor) {
     lists[i] = new_ListGUI(lists[i].x, lists[i].y, lists[i].text, valueColor, nextColor, lastColor, LIGHTGRAY);
     draw_ListGUI(&lists[i]);
 }
-typedef struct Timer {
-    double startTime;   // Start time (seconds)
-    double lifeTime;    // Lifetime (seconds)
-} Timer;
-void StartTimer(Timer *timer, double lifetime)
-{
-    timer->startTime = GetTime();
-    timer->lifeTime = lifetime;
-}
-bool TimerDone(Timer timer)
-{
-    return GetTime() - timer.startTime >= timer.lifeTime;
-}
-double GetElapsed(Timer timer)
-{
-    return GetTime() - timer.startTime;
-}
-typedef struct Button {
-    Rectangle bounds;
-    const char *text;
-    Color color;
-    Color textColor;
-    bool clicked;
-} Button;
-
-bool IsMouseOverButton(Button button) {
-    Vector2 mouse = GetMousePosition();
-    bool isOver = CheckCollisionPointRec(mouse, button.bounds);
-
-    if (isOver && IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-        button.clicked = true;
-    } else {
-        button.clicked = false;
-    }
-
-    return button.clicked; 
-}
-
-Button new_button(Rectangle bounds, char* text, Color color, Color textColor) {
-    Button button = {
-        .bounds = bounds,
-        .text = strdup(text),
-        .color = color,
-        .textColor = textColor,
-    };
-    return button;
-}
-
-void DrawButton(Button button) {
-    DrawRectangleRec(button.bounds, button.color);
-    DrawText(button.text, (int)(button.bounds.x + button.bounds.width / 2 - MeasureText(button.text, 20) / 2),
-             (int)(button.bounds.y + button.bounds.height / 2 - 10), 20, button.textColor);
-}
 
 int main(void)
 {
