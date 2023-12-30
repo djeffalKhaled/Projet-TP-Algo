@@ -55,39 +55,6 @@ void printList(Node* node) {
     }
     printf("\n");
 }
-
-// main
-    Node*  tete = NULL;
-    int num_elements;
-
- // Demander le nombre d'éléments
-    printf("Entrez le nombre l'element  : ");
-    scanf("%d", &num_elements);
-
-    // Demander à l'utilisateur les valeurs pour chaque élément
-    for (int i = 0; i < num_elements; ++i) {
-        int value;
-        printf("Entrez la valeur pour  l'element %d : ", i + 1);
-        scanf("%d", &value);
-        ajout_element(&tete, value);
-    }
-
-    // Afficher la liste
-    printf("Liste avant le tri par insertion : ");
-    printList(tete);
-
-    tri_par_insertion(tete); // tri la liste
-
- printf("liste apres tri insertion : "); // affichage aprés le tri
- printList(tete);
-
-
-    // Libération de la mémoire
-    while ( tete != NULL) {
-        Node* temp =  tete;
-        tete =  tete->next;
-        free(temp);
-    } 
 //fin .
 
 void build_linked_list()
