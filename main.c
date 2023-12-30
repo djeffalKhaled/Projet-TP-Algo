@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 typedef struct node {
     int val;
     struct node* prev;
@@ -28,13 +29,12 @@ void add_element(node** head, int val) {
         newNode->prev = temp;
     }
 }
-void printList(struct node* head) {
-    while (head != NULL) {
-        printf("%d <-> ", head->val);
-        head = head->next;
-    }
-    printf("NULL\n");
-}
+
+// Message au wassim: Ajouter le trie par l'insertion la.
+// Vous pouvez remplacer le code "add_element" et "createNode" par votre propre code équivalent si vous le souhaitez. 
+// Ils sont là pour que mon interface fonctionne correctement.
+
+
 node *head = NULL;
 void build_linked_list()
 {
