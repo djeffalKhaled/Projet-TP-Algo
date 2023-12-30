@@ -34,7 +34,8 @@ void tri_par_insertion(Node* node){
      Node* R =p;
      int temp;
 
-    while(Q!= NULL ){
+    while(Q!= NULL )
+    {
 
         temp=Q->data;
         p=Q->prev;
@@ -42,11 +43,13 @@ void tri_par_insertion(Node* node){
     (p->next)->data = p->data;
     R = p;
     p = p->prev;
-}      if(R->data > temp){
-        R->data = temp;}
+    }     
+        if(R->data > temp) {
+        R->data = temp;
+        }
         Q= Q->next ;
-    }
-}
+      }
+     }
 //  afficher la liste
 void printList(Node* node) {
     while (node != NULL) {
@@ -54,6 +57,14 @@ void printList(Node* node) {
         node = node->next;
     }
     printf("\n");
+}
+//lebérer la mémoire
+void freeList(Node* head) {
+    while (head != NULL) {
+        Node* temp = head;
+        head = head->next;
+        free(temp);
+    }
 }
 //fin .
 
