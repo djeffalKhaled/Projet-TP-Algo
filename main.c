@@ -19,7 +19,7 @@ typedef struct Node {
     if (*tete_ref == NULL) {
         new_node->prev = NULL;
         *tete_ref = new_node;
-    } else {
+     }  else {
         Node* last = *tete_ref;
         while (last->next != NULL) {
             last = last->next;
