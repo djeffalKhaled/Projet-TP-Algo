@@ -29,7 +29,6 @@ void add_element(node** head, int val) {
         newNode->prev = temp;
     }
 }
-
 // Message au wassim: Ajouter le trie par l'insertion la.
 // Vous pouvez remplacer le code "add_element" et "createNode" par votre propre code équivalent si vous le souhaitez. 
 // Ils sont là pour que mon interface fonctionne correctement.
@@ -203,7 +202,6 @@ int main(void)
     SetTargetFPS(24);
     while (!WindowShouldClose())
     {
-        
         if (IsKeyDown(KEY_SPACE)) {
             add_element(&head, 20);
             screenWidth += 200;
@@ -216,7 +214,6 @@ int main(void)
         BeginDrawing();
             
             ClearBackground(RAYWHITE);
-             
             DrawText("-> Created in Raylib", 20, 10, 10, LIGHTGRAY);
             DrawButton(sortButton);
             DrawButton(addButton);
