@@ -3,42 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct node {
-    int val;
-    struct node* prev;
-    struct node* next;
-}node ;
-struct node* createNode(int val) {
-    node* newNode = (struct node*)malloc(sizeof(node));
-    newNode->val = val;
-    newNode->prev = NULL;
-    newNode->next = NULL;
-    return newNode;
-}
-void add_element(node** head, int val) {
-    node* newNode = createNode(val);
-    
-    if (*head == NULL) {
-        *head = newNode;
-    } else {
-        struct node* temp = *head;
-        while (temp->next != NULL) {
-            temp = temp->next;
-        }
-        temp->next = newNode;
-        newNode->prev = temp;
-    }
-}
-
-// Message au wassim: Ajouter le trie par l'insertion la.
-// Vous pouvez remplacer le code "add_element" et "createNode" par votre propre code équivalent si vous le souhaitez. 
-// Ils sont là pour que mon interface fonctionne correctement.
-
-
-node *head = NULL;
-
-//code tri liste biderectionelle par insertion
-
 // Structure pour les nœuds de la liste doublement chaînée
 typedef struct Node {
     int data;
@@ -129,12 +93,12 @@ void printList(Node* node) {
 void build_linked_list()
 {
     // Elements of the linked list
-    add_element(&head, 10);
-    add_element(&head, 5);
-    add_element(&head, 7);
-    add_element(&head, 9);
-    add_element(&head, 1);
-    add_element(&head, 4);
+    ajout_element(&head, 10);
+    ajout_element(&head, 5);
+    ajout_element(&head, 7);
+    ajout_element(&head, 9);
+    ajout_element(&head, 1);
+    ajout_element(&head, 4);
 }
 typedef struct listGUI {
     Rectangle value;
