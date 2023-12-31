@@ -279,7 +279,30 @@ int main(void)
         }
         draw_last_ListGUI(&lists[totalElements - 1]);
 
+        if (canSort)
+        {
+            // Sort the linked list
+            tri_par_insertion(head);
 
+            // Draw the sorted linked list visualization
+            Rectangle deletion = {0, 0, 1300, 300};
+            DrawRectangleRec(deletion, RAYWHITE);
+            Node* p = head;
+            int i = 0; int j = 0;
+            while (p != NULL)
+            {
+                char str[10];
+                sprintf(str, "%d", p->data);
+                lists[i] = new_ListGUI(i * 100 + j, 130, str, GREEN, DARKGREEN, DARKGREEN, LIGHTGRAY);
+                j = j + 100;
+                i++;
+                p = p->next;
+            }
+            for (i = 0; i < sizeof(lists) / sizeof(lists[0]); i++)
+            {
+                draw_ListGUI(&lists[i]);
+            }
+        }
 
         EndDrawing();
     }
