@@ -3,7 +3,7 @@
 Projet créé en collaboration :
 - BAKIRI Samy
   - matricule:
-  - github:
+  - github: https://github.com/xlivan
 - BARAT Wassim
   - matricule:
   - github: https://github.com/Wassimbarat10
