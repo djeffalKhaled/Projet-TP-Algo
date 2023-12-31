@@ -127,7 +127,17 @@ void draw_ListGUI(listGUI *list) {
     Rectangle lastArrow = {list->x + 110, list->y - 60, 10, 30};
     DrawRectangleRec(lastArrow, list->pointerColor);
     
-    
+    // Draws the value's text
+    float centerX = list->value.x + list->value.width / 2;
+    float centerY = list->value.y + list->value.height / 2;
+    // Measure the text width and height
+    Vector2 textSize = MeasureTextEx(GetFontDefault(), list->text, 20, 1);
+    DrawText(list->text, (int)(centerX - textSize.x / 2), (int)(centerY - textSize.y / 2), 20, WHITE);
+}
+void draw_last_ListGUI(listGUI *list) {
+    DrawRectangleRec(list->value, list->valColor);
+    DrawRectangleRec(list->next, list->nextColor);
+    DrawRectangleRec(list->last, list->lastColor);
     // Draws the value's text
     float centerX = list->value.x + list->value.width / 2;
     float centerY = list->value.y + list->value.height / 2;
@@ -152,7 +162,6 @@ void recolor(int i, Color valueColor, Color nextColor, Color lastColor) {
     lists[i] = new_ListGUI(lists[i].x, lists[i].y, lists[i].text, valueColor, nextColor, lastColor, LIGHTGRAY);
     draw_ListGUI(&lists[i]);
 }
-
 int main(void)
 {
     int screenWidth = 1300;
@@ -213,11 +222,11 @@ int main(void)
                 goto repeat;
             }
             GuiButton(deleteButton, "Delete Element");
-            for (int i = 0; i < sizeof(lists) / sizeof(lists[0]); i++)
+            for (int i = 0; i < totalElements - 1; i++)
             {
                 draw_ListGUI(&lists[i]);
             }
-            
+            draw_last_ListGUI(&lists[totalElements - 1]);
             if (canSort)
             {
                 tri_par_insertion(head);
