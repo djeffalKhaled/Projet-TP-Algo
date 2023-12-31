@@ -164,7 +164,7 @@ void recolor(int i, Color valueColor, Color nextColor, Color lastColor) {
 }
 int main(void)
 {
-    int screenWidth = 1300;
+    int screenWidth = 1100;
     int screenHeight = 600;
     Color valColors = BLUE;
     Color nextColors = DARKBLUE;
