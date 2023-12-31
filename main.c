@@ -72,9 +72,7 @@ void freeList(Node* head) {
         free(temp);
     }
 }
-
 Node *head = NULL;
-
 void build_linked_list() {
     // Elements of the linked list
     ajout_element(&head, 10);
@@ -84,7 +82,6 @@ void build_linked_list() {
     ajout_element(&head, 1);
     ajout_element(&head, 4);
 }
-
 typedef struct listGUI {
     Rectangle value;
     Color valColor;
@@ -99,7 +96,6 @@ typedef struct listGUI {
     int y;
     char* text;
 } listGUI;
-
 listGUI new_ListGUI(int x, int y, char* text, Color valColor, Color nextColor, Color lastColor, Color pointerColor) {
     listGUI list = {
         .value = {x, y, 100, 80},
@@ -117,7 +113,6 @@ listGUI new_ListGUI(int x, int y, char* text, Color valColor, Color nextColor, C
     };
     return list;
 }
-
 void draw_ListGUI(listGUI *list) {
     DrawRectangleRec(list->value, list->valColor);
     DrawRectangleRec(list->next, list->nextColor);
@@ -139,7 +134,6 @@ void draw_ListGUI(listGUI *list) {
     Vector2 textSize = MeasureTextEx(GetFontDefault(), list->text, 20, 1);
     DrawText(list->text, (int)(centerX - textSize.x / 2), (int)(centerY - textSize.y / 2), 20, WHITE);
 }
-
 void draw_last_ListGUI(listGUI *list) {
     DrawRectangleRec(list->value, list->valColor);
     DrawRectangleRec(list->next, list->nextColor);
@@ -153,14 +147,11 @@ void draw_last_ListGUI(listGUI *list) {
     Vector2 textSize = MeasureTextEx(GetFontDefault(), list->text, 20, 1);
     DrawText(list->text, (int)(centerX - textSize.x / 2), (int)(centerY - textSize.y / 2), 20, WHITE);
 }
-
 listGUI lists[10];
-
 void clear_Node(int i) {
     Rectangle rec = { lists[i].x, lists[i].y, 200, 80};
     DrawRectangleRec(rec, RAYWHITE);
 }
-
 void swap_Position(int i, int j) {
     int x1 = lists[i].x;
     int y1 = lists[i].y;
@@ -170,12 +161,10 @@ void swap_Position(int i, int j) {
     lists[j] = new_ListGUI(x1, y1, lists[j].text, lists[j].valColor, lists[j].nextColor, lists[j].lastColor, LIGHTGRAY);
     lists[i] = new_ListGUI(x2, y2, lists[i].text, lists[i].valColor, lists[i].nextColor, lists[j].lastColor, LIGHTGRAY);
 }
-
 void recolor(int i, Color valueColor, Color nextColor, Color lastColor) {
     lists[i] = new_ListGUI(lists[i].x, lists[i].y, lists[i].text, valueColor, nextColor, lastColor, LIGHTGRAY);
     draw_ListGUI(&lists[i]);
 }
-
 int main(void)
 {
     int screenWidth = 1100;
