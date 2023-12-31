@@ -162,7 +162,6 @@ void recolor(int i, Color valueColor, Color nextColor, Color lastColor) {
     lists[i] = new_ListGUI(lists[i].x, lists[i].y, lists[i].text, valueColor, nextColor, lastColor, LIGHTGRAY);
     draw_ListGUI(&lists[i]);
 }
-// Test 
 int main(void)
 {
     int screenWidth = 1100;
