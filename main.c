@@ -11,9 +11,8 @@ typedef struct Node {
     struct Node* prev;
     struct Node* next;
 }   Node;
-
+//fin;
  int totalElements;
-
 // Function to add an element to the linked list
  void ajout_element(Node** tete_ref, int new_data) {
      Node* new_node = (Node*)malloc(sizeof(Node));
@@ -33,7 +32,7 @@ typedef struct Node {
     }
         totalElements++;
  }
- //Fin;
+
  // Function to perform insertion sort on the linked list
  void tri_par_insertion(Node* node) {
      Node* Q = node->next;
@@ -54,7 +53,7 @@ typedef struct Node {
          Q = Q->next;
      }
  }
- //fin;
+
  // Function to print the linked list
  void printList(Node* node) {
      while (node != NULL) {
@@ -63,7 +62,7 @@ typedef struct Node {
      }
      printf("\n");
  }
-
+ //fi,n
  // Function to free the memory allocated for the linked list
  void freeList(Node* head) {
     while (head != NULL) {
@@ -73,7 +72,7 @@ typedef struct Node {
      }
  }
  Node* head = NULL;
- //fin;
+ 
  // Function that adds an element in given position
  void ajout_element_pos(Node** head, int element, int position) {
     if (position < 0 || position > totalElements) {
