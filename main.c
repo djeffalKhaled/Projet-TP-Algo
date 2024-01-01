@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Structure pour les nœuds de la liste doublement chaînée
+// Structure for the nodes of the doubly linked list
 typedef struct Node {
     int data;
     struct Node* prev;
@@ -14,7 +14,7 @@ typedef struct Node {
 
 int totalElements;
 
-// Fonction pour créer  la liste
+// Function to add an element to the linked list
 void ajout_element(Node** tete_ref, int new_data) {
     Node* new_node = (Node*)malloc(sizeof(Node));
     new_node->data = new_data;
@@ -34,6 +34,7 @@ void ajout_element(Node** tete_ref, int new_data) {
     totalElements++;
 }
 
+// Function to perform insertion sort on the linked list
 void tri_par_insertion(Node* node) {
     Node* Q = node->next;
     Node* p = node;
@@ -55,7 +56,7 @@ void tri_par_insertion(Node* node) {
     }
 }
 
-//  afficher la liste
+// Function to print the linked list
 void printList(Node* node) {
     while (node != NULL) {
         printf("%d ", node->data);
@@ -64,7 +65,7 @@ void printList(Node* node) {
     printf("\n");
 }
 
-//libérer la mémoire
+// Function to free the memory allocated for the linked list
 void freeList(Node* head) {
     while (head != NULL) {
         Node* temp = head;
@@ -73,10 +74,10 @@ void freeList(Node* head) {
     }
 }
 
-Node *head = NULL;
+Node* head = NULL;
 
+// Function to build the linked list
 void build_linked_list() {
-    // Elements of the linked list
     ajout_element(&head, 10);
     ajout_element(&head, 5);
     ajout_element(&head, 7);
@@ -118,45 +119,41 @@ listGUI new_ListGUI(int x, int y, char* text, Color valColor, Color nextColor, C
     return list;
 }
 
-void draw_ListGUI(listGUI *list) {
+void draw_ListGUI(listGUI* list) {
     DrawRectangleRec(list->value, list->valColor);
     DrawRectangleRec(list->next, list->nextColor);
     DrawRectangleRec(list->nextPointer, list->pointerColor);
     DrawRectangleRec(list->last, list->lastColor);
     DrawRectangleRec(list->lastPointer, list->pointerColor);
 
-    // Gives the pointers an arrow look
     Rectangle nextArrow = {list->x + 180, list->y + 100, 10, 30};
     DrawRectangleRec(nextArrow, list->pointerColor);
     Rectangle lastArrow = {list->x + 110, list->y - 60, 10, 30};
     DrawRectangleRec(lastArrow, list->pointerColor);
 
-    // Draws the value's text
     float centerX = list->value.x + list->value.width / 2;
     float centerY = list->value.y + list->value.height / 2;
 
-    // Measure the text width and height
     Vector2 textSize = MeasureTextEx(GetFontDefault(), list->text, 20, 1);
     DrawText(list->text, (int)(centerX - textSize.x / 2), (int)(centerY - textSize.y / 2), 20, WHITE);
 }
 
-void draw_last_ListGUI(listGUI *list) {
+void draw_last_ListGUI(listGUI* list) {
     DrawRectangleRec(list->value, list->valColor);
     DrawRectangleRec(list->next, list->nextColor);
     DrawRectangleRec(list->last, list->lastColor);
 
-    // Draws the value's text
     float centerX = list->value.x + list->value.width / 2;
     float centerY = list->value.y + list->value.height / 2;
 
-    // Measure the text width and height
     Vector2 textSize = MeasureTextEx(GetFontDefault(), list->text, 20, 1);
     DrawText(list->text, (int)(centerX - textSize.x / 2), (int)(centerY - textSize.y / 2), 20, WHITE);
 }
 
 listGUI lists[10];
+
 void clear_Node(int i) {
-    Rectangle rec = { lists[i].x, lists[i].y, 200, 80};
+    Rectangle rec = {lists[i].x, lists[i].y, 200, 80};
     DrawRectangleRec(rec, RAYWHITE);
 }
 
@@ -175,8 +172,42 @@ void recolor(int i, Color valueColor, Color nextColor, Color lastColor) {
     draw_ListGUI(&lists[i]);
 }
 
-int main(void)
-{
+// Function to delete the last element in the linked list
+void deleteLastElement() {
+    if (head != NULL) {
+        Node* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+
+        if (temp->prev != NULL) {
+            // If not the first element, update the previous node's next pointer
+            temp->prev->next = NULL;
+        } else {
+            // If it's the first element, update the head pointer
+            head = NULL;
+        }
+
+        free(temp);
+        totalElements--;
+    }
+}
+
+// Function to update the linked list data for visualization
+void updateListData(Color valColors, Color nextColors, Color lastColors) {
+    Node* p = head;
+    int i = 0; int j = 0;
+    while (p != NULL) {
+        char str[10];
+        sprintf(str, "%d", p->data);
+        lists[i] = new_ListGUI(i * 100 + j, 130, str, valColors, nextColors, lastColors, LIGHTGRAY);
+        j = j + 100;
+        i++;
+        p = p->next;
+    }
+}
+
+int main(void) {
     int screenWidth = 1100;
     int screenHeight = 600;
     Color valColors = BLUE;
@@ -185,11 +216,10 @@ int main(void)
     bool canSort = false;
 
     build_linked_list();
-    
+
     Node* p = head;
     int i = 0; int j = 0;
-    while (p != NULL)
-    {
+    while (p != NULL) {
         char str[10];
         sprintf(str, "%d", p->data);
         lists[i] = new_ListGUI(i * 100 + j, 130, str, valColors, nextColors, lastColors, LIGHTGRAY);
@@ -198,22 +228,19 @@ int main(void)
         p = p->next;
     }
 
-    // Buttons
     Rectangle sortButton = {800, 450, 300, 100};
     Rectangle addButton = {450, 450, 300, 100};
     Rectangle deleteButton = {100, 450, 300, 100};
-    
-    // Value Boxes
+
     Rectangle addButtonValue = {450, 400, 300, 50};
 
-    InitWindow(screenWidth, screenHeight, "Linked List Representation"); 
+    InitWindow(screenWidth, screenHeight, "Linked List Representation");
     GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
     SetTargetFPS(24);
-    
-    while (!WindowShouldClose())
-    {
+
+    while (!WindowShouldClose()) {
         BeginDrawing();
-            
+
         ClearBackground(RAYWHITE);
         DrawText("-> Created in Raylib", 20, 10, 10, LIGHTGRAY);
 
@@ -221,85 +248,36 @@ int main(void)
             canSort = true;
         }
 
-        // Add Element Button code
         int elementValue;
         GuiSpinner(addButtonValue, "", &elementValue, -100, 100, true);
-        
+
         if (GuiButton(addButton, "Add Element") && totalElements < 8) {
             char str[10];
             sprintf(str, "%d", elementValue);
             DrawText(str, 30, 20, 20, LIGHTGRAY);
             ajout_element(&head, elementValue);
-
-            // Update the linked list data
-            p = head;
-            i = 0; j = 0;
-            while (p != NULL)
-            {
-                char str[10];
-                sprintf(str, "%d", p->data);
-                lists[i] = new_ListGUI(i * 100 + j, 130, str, valColors, nextColors, lastColors, LIGHTGRAY);
-                j = j + 100;
-                i++;
-                p = p->next;
-            }
+            updateListData(valColors, nextColors, lastColors);
         }
 
-        // Delete Element Button code
         if (GuiButton(deleteButton, "Delete Element") && totalElements > 0) {
-            // Delete the last element
-            Node* temp = head;
-            while (temp->next != NULL) {
-                temp = temp->next;
-            }
-            if (temp->prev != NULL) {
-                temp->prev->next = NULL;
-                free(temp);
-                totalElements--;
-
-                // Update the linked list data
-                p = head;
-                i = 0; j = 0;
-                while (p != NULL)
-                {
-                    char str[10];
-                    sprintf(str, "%d", p->data);
-                    lists[i] = new_ListGUI(i * 100 + j, 130, str, valColors, nextColors, lastColors, LIGHTGRAY);
-                    j = j + 100;
-                    i++;
-                    p = p->next;
-                }
-            }
+            deleteLastElement();
+            updateListData(valColors, nextColors, lastColors);
         }
 
-        // Draw the linked list visualization
-        for (int i = 0; i < totalElements - 1; i++)
-        {
+        for (i = 0; i < totalElements - 1; i++) {
             draw_ListGUI(&lists[i]);
         }
         draw_last_ListGUI(&lists[totalElements - 1]);
 
-        if (canSort)
-        {
-            // Sort the linked list
+        if (canSort) {
             tri_par_insertion(head);
 
-            // Draw the sorted linked list visualization
             Rectangle deletion = {0, 0, 1300, 300};
             DrawRectangleRec(deletion, RAYWHITE);
-            Node* p = head;
-            int i = 0; int j = 0;
-            while (p != NULL)
-            {
-                char str[10];
-                sprintf(str, "%d", p->data);
-                lists[i] = new_ListGUI(i * 100 + j, 130, str, GREEN, DARKGREEN, DARKGREEN, LIGHTGRAY);
-                j = j + 100;
-                i++;
-                p = p->next;
-            }
-            for (i = 0; i < sizeof(lists) / sizeof(lists[0]); i++)
-            {
+
+            updateListData(GREEN, DARKGREEN, DARKGREEN);
+
+            for (i = 0; i < totalElements; i++) {
                 draw_ListGUI(&lists[i]);
             }
         }
@@ -309,7 +287,6 @@ int main(void)
 
     CloseWindow();
 
-    // Free the linked list memory
     freeList(head);
 
     return 0;
