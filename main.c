@@ -284,7 +284,8 @@ int main(void) {
         else if (totalElements == 1) {
             DrawText("Head + Tail", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
         }
-
+        DrawText("Tri par insertion d'une liste chainee biderectionelle", 400, 5, 25, DARKGRAY);
+        
         EndDrawing();
     }
 
