@@ -50,7 +50,7 @@ void ajout_element(Node** tet_ref, int new_data) {
          }
          if (R->data > Val) {
             R->data =  Val;
-        }
+         }
            q = q->next;
        }
     }
