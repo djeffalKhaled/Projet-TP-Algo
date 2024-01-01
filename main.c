@@ -12,8 +12,8 @@ typedef struct Node {
     struct Node* next; 
 } Node;
 
-int totalElements;
-// Function to add an element to the linked list
+   int totalElements;
+// Function which creates a list
 void ajout_element(Node** tet_ref, int new_data) {
     Node* new_node = (Node)malloc(sizeof(Node));
     new_node->data = new_data;
@@ -22,7 +22,8 @@ void ajout_element(Node** tet_ref, int new_data) {
     if (tet_ref == NULL) {
         new_node->prev = NULL;
         tet_ref = new_node;
-    } else {
+    } else 
+    {
         Node last = tet_ref;
         while (last->next != NULL) {
             last = last->next;
@@ -30,27 +31,27 @@ void ajout_element(Node** tet_ref, int new_data) {
         last->next = new_node;
         new_node->prev = last;
     }
-    totalElements++;
+        totalElements++;
 }
 
 // Function to perform insertion sort on the linked list
 void tri_par_insertion(Node node) {
-    Node* Q = node->next;
     Node* p = node;
-    Node* R = p;
+    Node* q = node->next;
     int Val;
-    while (Q != NULL) {
-        temp = Q->data;
-        p = Q->prev;
-        while (p != NULL && Val < p->data) {
-            (p->next)->data = p->data;
-            R = p;
-            p = p->prev;
+    Node* R = p;
+    while (q != NULL) {
+        p = q->prev;
+        temp = q->data;
+        while ( Val < p->data && p != NULL) {
+          (p->next)->data = p->data;
+           R = p;
+           p = p->prev;
         }
         if (R->data > Val) {
             R->data =  Val;
         }
-        Q = Q->next;
+           q = q->next;
       }
   }
 
@@ -74,7 +75,7 @@ void freeList(Node* head)
     }
 }
 
-Node* head = NULL;
+     Node* head = NULL;
 
  
 // Function to build the linked list
