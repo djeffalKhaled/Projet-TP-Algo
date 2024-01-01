@@ -84,6 +84,8 @@ void build_linked_list() {
     ajout_element(&head, 9);
     ajout_element(&head, 1);
     ajout_element(&head, 4);
+    ajout_element(&head, -5);
+    ajout_element(&head, -8);
 }
 
 typedef struct listGUI {
@@ -208,12 +210,12 @@ void updateListData(Color valColors, Color nextColors, Color lastColors) {
 }
 
 int main(void) {
-    int screenWidth = 1100;
+    int screenWidth = 1500;
     int screenHeight = 600;
+    int elementValue = 0;
     Color valColors = BLUE;
     Color nextColors = DARKBLUE;
     Color lastColors = DARKBLUE;
-    bool canSort = false;
 
     build_linked_list();
 
@@ -228,11 +230,11 @@ int main(void) {
         p = p->next;
     }
 
-    Rectangle sortButton = {800, 450, 300, 100};
-    Rectangle addButton = {450, 450, 300, 100};
-    Rectangle deleteButton = {100, 450, 300, 100};
+    Rectangle sortButton = {1050, 450, 300, 100};
+    Rectangle addButton = {600, 450, 300, 100};
+    Rectangle deleteButton = {150, 450, 300, 100};
 
-    Rectangle addButtonValue = {450, 400, 300, 50};
+    Rectangle addButtonValue = {600, 400, 300, 50};
 
     InitWindow(screenWidth, screenHeight, "Linked List Representation");
     GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
@@ -244,11 +246,19 @@ int main(void) {
         ClearBackground(RAYWHITE);
         DrawText("-> Created in Raylib", 20, 10, 10, LIGHTGRAY);
 
-        if (GuiButton(sortButton, "Insertion Sort")) {
-            canSort = true;
+        if (GuiButton(sortButton, "Insertion Sort") && totalElements > 0) {
+            tri_par_insertion(head);
+
+            Rectangle deletion = {0, 0, 1300, 300};
+            DrawRectangleRec(deletion, RAYWHITE);
+
+            updateListData(GREEN, DARKGREEN, DARKGREEN);
+
+            for (i = 0; i < totalElements; i++) {
+                draw_ListGUI(&lists[i]);
+            }
         }
 
-        int elementValue;
         GuiSpinner(addButtonValue, "", &elementValue, -100, 100, true);
 
         if (GuiButton(addButton, "Add Element") && totalElements < 8) {
@@ -256,6 +266,7 @@ int main(void) {
             sprintf(str, "%d", elementValue);
             DrawText(str, 30, 20, 20, LIGHTGRAY);
             ajout_element(&head, elementValue);
+            screenWidth += 400;
             updateListData(valColors, nextColors, lastColors);
         }
 
@@ -268,19 +279,6 @@ int main(void) {
             draw_ListGUI(&lists[i]);
         }
         draw_last_ListGUI(&lists[totalElements - 1]);
-
-        if (canSort) {
-            tri_par_insertion(head);
-
-            Rectangle deletion = {0, 0, 1300, 300};
-            DrawRectangleRec(deletion, RAYWHITE);
-
-            updateListData(GREEN, DARKGREEN, DARKGREEN);
-
-            for (i = 0; i < totalElements; i++) {
-                draw_ListGUI(&lists[i]);
-            }
-        }
 
         EndDrawing();
     }
