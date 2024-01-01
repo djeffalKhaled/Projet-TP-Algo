@@ -11,8 +11,9 @@ typedef struct Node {
     struct Node* prev;
     struct Node* next;
 }   Node;
-//fin;
+
  int totalElements;
+
 // Function to add an element to the linked list
  void ajout_element(Node** tete_ref, int new_data) {
      Node* new_node = (Node*)malloc(sizeof(Node));
@@ -62,7 +63,7 @@ typedef struct Node {
      }
      printf("\n");
  }
- //fi,n
+ 
  // Function to free the memory allocated for the linked list
  void freeList(Node* head) {
     while (head != NULL) {
