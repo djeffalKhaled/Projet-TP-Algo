@@ -14,67 +14,67 @@ typedef struct Node {
 
 int totalElements;
 
-// Function to add an element to the linked list
-void ajout_element(Node** tete_ref, int new_data) {
-    Node* new_node = (Node*)malloc(sizeof(Node));
-    new_node->data = new_data;
-    new_node->next = NULL;
+ // Function to add an element to the linked list
+ void ajout_element(Node** tete_ref, int new_data) {
+     Node* new_node = (Node*)malloc(sizeof(Node));
+     new_node->data = new_data;
+     new_node->next = NULL;
 
-    if (*tete_ref == NULL) {
-        new_node->prev = NULL;
-        *tete_ref = new_node;
-    } else {
-        Node* last = *tete_ref;
-        while (last->next != NULL) {
+     if (*tete_ref == NULL) {
+         new_node->prev = NULL;
+         *tete_ref = new_node;
+     } else {
+         Node* last = *tete_ref;
+         while (last->next != NULL) {
             last = last->next;
         }
         last->next = new_node;
         new_node->prev = last;
     }
-    totalElements++;
+        totalElements++;
 }
 
-// Function to perform insertion sort on the linked list
-void tri_par_insertion(Node* node) {
-    Node* Q = node->next;
-    Node* p = node;
-    Node* R = p;
-    int temp;
+ // Function to perform insertion sort on the linked list
+ void tri_par_insertion(Node* node) {
+     Node* Q = node->next;
+     Node* p = node;
+     Node* R = p;
+     int temp;
 
-    while (Q != NULL) {
-        temp = Q->data;
-        p = Q->prev;
-        while (p != NULL && temp < p->data) {
-            (p->next)->data = p->data;
-            R = p;
-            p = p->prev;
-        }
-        if (R->data > temp) {
-            R->data = temp;
-        }
-        Q = Q->next;
-    }
-}
+     while (Q != NULL) {
+         temp = Q->data;
+         p = Q->prev;
+         while (p != NULL && temp < p->data) {
+             (p->next)->data = p->data;
+             R = p;
+             p = p->prev;
+         }
+         if (R->data > temp) {
+             R->data = temp;
+         }
+         Q = Q->next;
+     }
+ }
 
-// Function to print the linked list
-void printList(Node* node) {
-    while (node != NULL) {
-        printf("%d ", node->data);
-        node = node->next;
-    }
-    printf("\n");
-}
+ // Function to print the linked list
+ void printList(Node* node) {
+     while (node != NULL) {
+         printf("%d ", node->data);
+         node = node->next;
+     }
+     printf("\n");
+ }
 
-// Function to free the memory allocated for the linked list
-void freeList(Node* head) {
+ // Function to free the memory allocated for the linked list
+ void freeList(Node* head) {
     while (head != NULL) {
-        Node* temp = head;
-        head = head->next;
-        free(temp);
-    }
-}
+         Node* temp = head;
+         head = head->next;
+         free(temp);
+     }
+ }
 
-Node* head = NULL;
+ Node* head = NULL;
 
 // Function to build the linked list
 void build_linked_list() {
