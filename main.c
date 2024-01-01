@@ -73,7 +73,6 @@ int totalElements;
          free(temp);
      }
  }
-
  Node* head = NULL;
 
 // Function to build the linked list
