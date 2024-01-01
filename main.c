@@ -266,7 +266,6 @@ int main(void) {
             sprintf(str, "%d", elementValue);
             DrawText(str, 30, 20, 20, LIGHTGRAY);
             ajout_element(&head, elementValue);
-            screenWidth += 400;
             updateListData(valColors, nextColors, lastColors);
         }
 
