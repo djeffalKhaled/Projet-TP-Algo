@@ -14,7 +14,7 @@ typedef struct Node {
 
 int totalElements;
 
- // Function to add an element to the linked list
+// Function to add an element to the linked list
  void ajout_element(Node** tete_ref, int new_data) {
      Node* new_node = (Node*)malloc(sizeof(Node));
      new_node->data = new_data;
