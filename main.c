@@ -32,7 +32,7 @@ int totalElements;
         new_node->prev = last;
     }
         totalElements++;
-}
+ }
 
  // Function to perform insertion sort on the linked list
  void tri_par_insertion(Node* node) {
