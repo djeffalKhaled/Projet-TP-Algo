@@ -254,9 +254,12 @@ int main(void) {
 
             updateListData(GREEN, DARKGREEN, DARKGREEN);
 
-            for (i = 0; i < totalElements; i++) {
+            // Updates the drawing for the insertion sort
+            for (i = 0; i < totalElements - 1; i++) {
                 draw_ListGUI(&lists[i]);
             }
+            draw_last_ListGUI(&lists[totalElements - 1]);
+            
         }
 
         GuiSpinner(addButtonValue, "", &elementValue, -100, 100, true);
@@ -275,9 +278,19 @@ int main(void) {
         }
 
         for (i = 0; i < totalElements - 1; i++) {
+            if (i == 0) {
+                DrawText("Head", lists[i].x + 25, lists[i].y + 180, 20, GRAY);
+            } 
             draw_ListGUI(&lists[i]);
         }
+        // Deals with drawing the last element
         draw_last_ListGUI(&lists[totalElements - 1]);
+        if (totalElements > 1) {
+            DrawText("Tail", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
+        }
+        else if (totalElements == 1) {
+            DrawText("Head + Tail", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
+        }
 
         EndDrawing();
     }
