@@ -10,9 +10,9 @@ typedef struct Node {
     int data;
     struct Node* prev;
     struct Node* next;
-} Node;
+}   Node;
 
-int totalElements;
+ int totalElements;
 
 // Function to add an element to the linked list
  void ajout_element(Node** tete_ref, int new_data) {
