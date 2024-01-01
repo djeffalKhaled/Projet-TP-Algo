@@ -75,6 +75,37 @@ int totalElements;
  }
  Node* head = NULL;
 
+ // Function that adds an element in given position
+ void ajout_element_pos(Node** head, int element, int position) {
+    if (position < 0 || position > totalElements) {
+        printf("Invalid position\n");
+        return;
+    }
+
+    Node* new_node = createNode(element);
+
+    if (position == 0) {
+        new_node->next = *head;
+        if (*head != NULL) {
+            (*head)->prev = new_node;
+        }
+        *head = new_node;
+    } else {
+        Node* current = *head;
+        for (int i = 0; i < position - 1; i++) {
+            current = current->next;
+        }new_node->next = current->next;
+        new_node->prev = current;
+        if (current->next != NULL) {
+            current->next->prev = new_node;
+        }
+        current->next = new_node;
+    }
+
+     totalElements++;
+ }
+
+
 // Function to build the linked list
 void build_linked_list() {
     ajout_element(&head, 10);
@@ -86,6 +117,7 @@ void build_linked_list() {
     ajout_element(&head, -5);
     ajout_element(&head, -8);
 }
+
 
 typedef struct listGUI {
     Rectangle value;
