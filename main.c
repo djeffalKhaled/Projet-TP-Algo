@@ -253,13 +253,6 @@ int main(void) {
             DrawRectangleRec(deletion, RAYWHITE);
 
             updateListData(GREEN, DARKGREEN, DARKGREEN);
-
-            // Updates the drawing for the insertion sort
-            for (i = 0; i < totalElements - 1; i++) {
-                draw_ListGUI(&lists[i]);
-            }
-            draw_last_ListGUI(&lists[totalElements - 1]);
-            
         }
 
         GuiSpinner(addButtonValue, "", &elementValue, -100, 100, true);
@@ -277,6 +270,7 @@ int main(void) {
             updateListData(valColors, nextColors, lastColors);
         }
 
+        // Main code for drawing
         for (i = 0; i < totalElements - 1; i++) {
             if (i == 0) {
                 DrawText("Head", lists[i].x + 25, lists[i].y + 180, 20, GRAY);
