@@ -41,19 +41,19 @@ void tri_par_insertion(Node node) {
       int Val;
       Node* R = p;
     while (q != NULL) {
-        p = q->prev;
-        temp = q->data;
-        while ( Val < p->data && p != NULL) {
+         p = q->prev;
+         temp = q->data;
+         while ( Val < p->data && p != NULL) {
           (p->next)->data = p->data;
            R = p;
            p = p->prev;
-        }
-        if (R->data > Val) {
+         }
+         if (R->data > Val) {
             R->data =  Val;
         }
            q = q->next;
-      }
-  }
+       }
+   }
 
 // Function to print the linked list
 void printList(Node* node) {
