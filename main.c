@@ -36,10 +36,10 @@ void ajout_element(Node** tet_ref, int new_data) {
 
 // Function to perform insertion sort on the linked list
 void tri_par_insertion(Node node) {
-    Node* p = node;
-    Node* q = node->next;
-    int Val;
-    Node* R = p;
+      Node* p = node;
+      Node* q = node->next;
+      int Val;
+      Node* R = p;
     while (q != NULL) {
         p = q->prev;
         temp = q->data;
