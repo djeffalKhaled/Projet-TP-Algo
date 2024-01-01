@@ -9,7 +9,7 @@
 typedef struct Node {
     int data;
     struct Node* prev;
-    struct Node* next;
+    struct Node* next; 
 } Node;
 
 int totalElements;
