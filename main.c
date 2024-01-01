@@ -64,16 +64,16 @@ void ajout_element(Node** tet_ref, int new_data) {
     printf("\n");
 }
 
-// Function to free the memory allocated for the linked list
-void freeList(Node* head)
-{
+ // Function to free the memory allocated for the linked list
+ void freeList(Node* head)
+ {
     Node* temp ;
     while (head != NULL) {
         temp = head; 
         head = head->next;
         free(temp);
-    }
- }
+     }
+  }
 
      Node* head = NULL;
 
