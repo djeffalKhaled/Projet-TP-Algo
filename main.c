@@ -13,18 +13,17 @@ typedef struct Node {
 } Node;
 
 int totalElements;
-
 // Function to add an element to the linked list
 void ajout_element(Node** tet_ref, int new_data) {
-    Node* new_node = (Node*)malloc(sizeof(Node));
+    Node* new_node = (Node)malloc(sizeof(Node));
     new_node->data = new_data;
     new_node->next = NULL;
 
-    if (*tet_ref == NULL) {
+    if (tet_ref == NULL) {
         new_node->prev = NULL;
-        *tet_ref = new_node;
+        tet_ref = new_node;
     } else {
-        Node* last = *tet_ref;
+        Node last = tet_ref;
         while (last->next != NULL) {
             last = last->next;
         }
@@ -35,7 +34,7 @@ void ajout_element(Node** tet_ref, int new_data) {
 }
 
 // Function to perform insertion sort on the linked list
-void tri_par_insertion(Node* node) {
+void tri_par_insertion(Node node) {
     Node* Q = node->next;
     Node* p = node;
     Node* R = p;
@@ -77,6 +76,7 @@ void freeList(Node* head)
 
 Node* head = NULL;
 
+ 
 // Function to build the linked list
 void build_linked_list() {
     ajout_element(&head, 10);
