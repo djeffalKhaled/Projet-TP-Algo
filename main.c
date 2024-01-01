@@ -15,16 +15,16 @@ typedef struct Node {
 int totalElements;
 
 // Function to add an element to the linked list
-void ajout_element(Node** tete_ref, int new_data) {
+void ajout_element(Node** tet_ref, int new_data) {
     Node* new_node = (Node*)malloc(sizeof(Node));
     new_node->data = new_data;
     new_node->next = NULL;
 
-    if (*tete_ref == NULL) {
+    if (*tet_ref == NULL) {
         new_node->prev = NULL;
-        *tete_ref = new_node;
+        *tet_ref = new_node;
     } else {
-        Node* last = *tete_ref;
+        Node* last = *tet_ref;
         while (last->next != NULL) {
             last = last->next;
         }
@@ -39,22 +39,21 @@ void tri_par_insertion(Node* node) {
     Node* Q = node->next;
     Node* p = node;
     Node* R = p;
-    int temp;
-
+    int Val;
     while (Q != NULL) {
         temp = Q->data;
         p = Q->prev;
-        while (p != NULL && temp < p->data) {
+        while (p != NULL && Val < p->data) {
             (p->next)->data = p->data;
             R = p;
             p = p->prev;
         }
-        if (R->data > temp) {
-            R->data = temp;
+        if (R->data > Val) {
+            R->data =  Val;
         }
         Q = Q->next;
-    }
-}
+      }
+  }
 
 // Function to print the linked list
 void printList(Node* node) {
@@ -66,9 +65,11 @@ void printList(Node* node) {
 }
 
 // Function to free the memory allocated for the linked list
-void freeList(Node* head) {
+void freeList(Node* head)
+{
+    Node* temp ;
     while (head != NULL) {
-        Node* temp = head;
+        temp = head; 
         head = head->next;
         free(temp);
     }
