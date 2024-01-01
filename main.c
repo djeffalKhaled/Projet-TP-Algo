@@ -5,12 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Structure for the nodes of the doubly linked list
-typedef struct Node {
+ // Structure for the nodes of the doubly linked list
+ typedef struct Node {
     int data;
     struct Node* prev;
     struct Node* next; 
-} Node;
+ }  Node;
 
    int totalElements;
 // Function which creates a list
@@ -34,8 +34,8 @@ void ajout_element(Node** tet_ref, int new_data) {
         totalElements++;
 }
 
-// Function to perform insertion sort on the linked list
-void tri_par_insertion(Node node) {
+ // Function to perform insertion sort on the linked list
+ void tri_par_insertion(Node node) {
       Node* p = node;
       Node* q = node->next;
       int Val;
@@ -53,10 +53,10 @@ void tri_par_insertion(Node node) {
         }
            q = q->next;
        }
-   }
+    }
 
-// Function to print the linked list
-void printList(Node* node) {
+ // Function to print the linked list
+ void printList(Node* node) {
     while (node != NULL) {
         printf("%d ", node->data);
         node = node->next;
@@ -73,13 +73,13 @@ void freeList(Node* head)
         head = head->next;
         free(temp);
     }
-}
+ }
 
      Node* head = NULL;
 
  
-// Function to build the linked list
-void build_linked_list() {
+ // Function to build the linked list
+ void build_linked_list() {
     ajout_element(&head, 10);
     ajout_element(&head, 5);
     ajout_element(&head, 7);
