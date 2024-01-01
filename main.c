@@ -33,14 +33,13 @@ typedef struct Node {
     }
         totalElements++;
  }
-
+ //Fin;
  // Function to perform insertion sort on the linked list
  void tri_par_insertion(Node* node) {
      Node* Q = node->next;
      Node* p = node;
      Node* R = p;
      int temp;
-
      while (Q != NULL) {
          temp = Q->data;
          p = Q->prev;
@@ -55,7 +54,7 @@ typedef struct Node {
          Q = Q->next;
      }
  }
-
+ //fin;
  // Function to print the linked list
  void printList(Node* node) {
      while (node != NULL) {
@@ -74,7 +73,7 @@ typedef struct Node {
      }
  }
  Node* head = NULL;
-
+ //fin;
  // Function that adds an element in given position
  void ajout_element_pos(Node** head, int element, int position) {
     if (position < 0 || position > totalElements) {
