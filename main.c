@@ -83,7 +83,6 @@ typedef struct Node {
 
     Node* new_node = malloc(sizeof(Node));
     new_node->data = element;
-
     if (position == 0) {
         new_node->next = *head;
         if (*head != NULL) {
