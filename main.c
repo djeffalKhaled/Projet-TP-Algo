@@ -81,7 +81,8 @@ typedef struct Node {
         return;
     }
 
-    Node* new_node = createNode(element);
+    Node* new_node = malloc(sizeof(Node));
+    new_node->data = element;
 
     if (position == 0) {
         new_node->next = *head;
@@ -260,11 +261,13 @@ int main(void) {
         p = p->next;
     }
 
-    Rectangle sortButton = {1050, 450, 300, 100};
-    Rectangle addButton = {600, 450, 300, 100};
-    Rectangle deleteButton = {150, 450, 300, 100};
+    // Buttons
+    Rectangle searchButton = {50, 450, 300, 100};
+    Rectangle deleteButton = {400, 450, 300, 100};
+    Rectangle addButton = {750, 450, 300, 100};
+    Rectangle sortButton = {1100, 450, 300, 100};
 
-    Rectangle addButtonValue = {600, 400, 300, 50};
+    Rectangle addButtonValue = {750, 400, 300, 50};
 
     InitWindow(screenWidth, screenHeight, "Linked List Representation");
     GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
@@ -286,6 +289,8 @@ int main(void) {
         }
 
         GuiSpinner(addButtonValue, "", &elementValue, -100, 100, true);
+
+        GuiButton(searchButton, "Search Element");
 
         if (GuiButton(addButton, "Add Element") && totalElements < 8) {
             char str[10];
@@ -315,7 +320,6 @@ int main(void) {
         else if (totalElements == 1) {
             DrawText("Head + Tail", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
         }
-        DrawText("Tri par insertion d'une liste chainee biderectionelle", 400, 5, 25, DARKGRAY);
         
         EndDrawing();
     }
