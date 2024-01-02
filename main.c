@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "timer.h"
 // Structure for the nodes of the doubly linked list
 typedef struct Node {
     int data;
@@ -225,6 +225,18 @@ void deleteLastElement() {
     }
 }
 
+void search_list_element(Node *head, int element) {
+    Node* p = head;
+    int pos = 0;
+    while (p != NULL) {
+        if (p->data == element) {
+            recolor(pos, GREEN, DARKGREEN, DARKGREEN);
+        }
+        pos++;
+        p = p->next;
+    }
+}
+
 // Function to update the linked list data for visualization
 void updateListData(Color valColors, Color nextColors, Color lastColors) {
     Node* p = head;
@@ -242,10 +254,12 @@ void updateListData(Color valColors, Color nextColors, Color lastColors) {
 int main(void) {
     int screenWidth = 1500;
     int screenHeight = 600;
-    int elementValue = 0;
+    int addElementValue = 0;
+    int searchElementValue = 0;
     Color valColors = BLUE;
     Color nextColors = DARKBLUE;
     Color lastColors = DARKBLUE;
+    Timer timer;
 
     build_linked_list();
 
@@ -267,6 +281,7 @@ int main(void) {
     Rectangle sortButton = {1100, 450, 300, 100};
 
     Rectangle addButtonValue = {750, 400, 300, 50};
+    Rectangle searchButtonValue = {50, 400, 300, 50};
 
     InitWindow(screenWidth, screenHeight, "Linked List Representation");
     GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
@@ -285,17 +300,27 @@ int main(void) {
             DrawRectangleRec(deletion, RAYWHITE);
 
             updateListData(GREEN, DARKGREEN, DARKGREEN);
+            StartTimer(&timer, 1);
         }
 
-        GuiSpinner(addButtonValue, "", &elementValue, -100, 100, true);
+        GuiSpinner(addButtonValue, "", &addElementValue, -100, 100, true);
+        GuiSpinner(searchButtonValue, "", &searchElementValue, -100, 100, false);
 
-        GuiButton(searchButton, "Search Element");
+        
+        if(GuiButton(searchButton, "Search Element")) {
+            search_list_element(head, searchElementValue); 
+            StartTimer(&timer, 1);
+        }
+        UpdateTimer(&timer);
+        if (TimerDone(&timer)) {
+            updateListData(BLUE, DARKBLUE, DARKBLUE);
+        }
 
         if (GuiButton(addButton, "Add Element") && totalElements < 8) {
             char str[10];
-            sprintf(str, "%d", elementValue);
+            sprintf(str, "%d", addElementValue);
             DrawText(str, 30, 20, 20, LIGHTGRAY);
-            ajout_element(&head, elementValue);
+            ajout_element(&head, addElementValue);
             updateListData(valColors, nextColors, lastColors);
         }
 
