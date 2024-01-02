@@ -256,6 +256,7 @@ int main(void) {
     int screenHeight = 600;
     int addElementValue = 0;
     int searchElementValue = 0;
+    bool ignoreTimer = false;
     Color valColors = BLUE;
     Color nextColors = DARKBLUE;
     Color lastColors = DARKBLUE;
@@ -306,14 +307,16 @@ int main(void) {
         GuiSpinner(addButtonValue, "", &addElementValue, -100, 100, true);
         GuiSpinner(searchButtonValue, "", &searchElementValue, -100, 100, false);
 
-        
+        // Awaits for 1 second as green and then updates
         if(GuiButton(searchButton, "Search Element")) {
             search_list_element(head, searchElementValue); 
             StartTimer(&timer, 1);
+            ignoreTimer = true;
         }
         UpdateTimer(&timer);
-        if (TimerDone(&timer)) {
+        if (TimerDone(&timer) && ignoreTimer) {
             updateListData(BLUE, DARKBLUE, DARKBLUE);
+            ignoreTimer = false;
         }
 
         if (GuiButton(addButton, "Add Element") && totalElements < 8) {
@@ -344,7 +347,6 @@ int main(void) {
         else if (totalElements == 1) {
             DrawText("Head + Tail", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
         }
-        
         EndDrawing();
     }
 
