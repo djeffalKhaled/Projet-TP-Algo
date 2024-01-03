@@ -351,12 +351,12 @@ int main(void) {
             ajout_element(&head, addElementValue);
             updateListData(valColors, nextColors, lastColors);
         }
-        GuiSpinner((Rectangle){400, 400, 300, 50}, "", &deleteButtonValue, 1, totalElements, true);  
+        GuiSpinner((Rectangle){400, 400, 300, 50}, "", &deleteButtonValue, 1, totalElements, false);  
           if (GuiButton(deleteButton, "Delete Element") && totalElements > 0) {
         // Delete the element at the specified position
         deleteElementAtPosition(deleteButtonValue-1);
         updateListData(valColors, nextColors, lastColors);
-    }
+        }
 
         
 
