@@ -275,7 +275,9 @@ int main(void) {
     Color lastColors = DARKBLUE;
     Timer timer;
     int deleteButtonValue = 1;
-
+    int addPosition = 0;
+    int addElementValue = 0;
+    
     build_linked_list();
 
     Node* p = head;
@@ -297,6 +299,9 @@ int main(void) {
 
     Rectangle addButtonValue = {750, 400, 300, 50};
     Rectangle searchButtonValue = {50, 400, 300, 50};
+
+    Rectangle addPositionInput = {750, 500, 300, 50};
+    Rectangle addElementButton = {750, 550, 300, 50};
 
     InitWindow(screenWidth, screenHeight, "Linked List Representation");
     GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
@@ -345,6 +350,13 @@ int main(void) {
         // Delete the element at the specified position
         deleteElementAtPosition(deleteButtonValue-1);
         updateListData(valColors, nextColors, lastColors);
+        }
+        GuiSpinner(addPositionInput, "Position", &addPosition, 0, totalElements, false);
+        if (GuiButton(addElementButton, "Add Element at Position") && totalElements < 8) {
+            char str[10];
+            sprintf(str, "%d", addElementValue);
+            ajout_element_pos(&head, addElementValue, addPosition);
+            updateListData(valColors, nextColors, lastColors);
         }
 
         
