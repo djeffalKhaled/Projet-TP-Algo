@@ -189,19 +189,8 @@ void clear_Node(int i) {
     DrawRectangleRec(rec, RAYWHITE);
 }
 
-void swap_Position(int i, int j) {
-    int x1 = lists[i].x;
-    int y1 = lists[i].y;
-    int x2 = lists[j].x;
-    int y2 = lists[j].y;
-
-    lists[j] = new_ListGUI(x1, y1, lists[j].text, lists[j].valColor, lists[j].nextColor, lists[j].lastColor, LIGHTGRAY);
-    lists[i] = new_ListGUI(x2, y2, lists[i].text, lists[i].valColor, lists[i].nextColor, lists[j].lastColor, LIGHTGRAY);
-}
-
 void recolor(int i, Color valueColor, Color nextColor, Color lastColor) {
     lists[i] = new_ListGUI(lists[i].x, lists[i].y, lists[i].text, valueColor, nextColor, lastColor, LIGHTGRAY);
-    draw_ListGUI(&lists[i]);
 }
 
 // Function to delete the last element in the linked list
