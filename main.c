@@ -250,6 +250,30 @@ void updateListData(Color valColors, Color nextColors, Color lastColors) {
         p = p->next;
     }
 }
+void deleteElementAtPosition(int position) {
+    if (head != NULL && position >= 0 && position < totalElements) {
+        Node* temp = head;
+        for (int i = 0; i < position; i++) {
+            temp = temp->next;
+        }
+
+        if (temp->prev != NULL) {
+            // If not the first element, update the previous node's next pointer
+            temp->prev->next = temp->next;
+        } else {
+            // If it's the first element, update the head pointer
+            head = temp->next;
+        }
+
+        if (temp->next != NULL) {
+            // If not the last element, update the next node's prev pointer
+            temp->next->prev = temp->prev;
+        }
+
+        free(temp);
+        totalElements--;
+    }
+}
 
 int main(void) {
     int screenWidth = 1500;
@@ -261,6 +285,7 @@ int main(void) {
     Color nextColors = DARKBLUE;
     Color lastColors = DARKBLUE;
     Timer timer;
+    int deleteButtonValue = 1;
 
     build_linked_list();
 
@@ -326,11 +351,14 @@ int main(void) {
             ajout_element(&head, addElementValue);
             updateListData(valColors, nextColors, lastColors);
         }
+        GuiSpinner((Rectangle){400, 400, 300, 50}, "", &deleteButtonValue, 1, totalElements, true);  
+          if (GuiButton(deleteButton, "Delete Element") && totalElements > 0) {
+        // Delete the element at the specified position
+        deleteElementAtPosition(deleteButtonValue-1);
+        updateListData(valColors, nextColors, lastColors);
+    }
 
-        if (GuiButton(deleteButton, "Delete Element") && totalElements > 0) {
-            deleteLastElement();
-            updateListData(valColors, nextColors, lastColors);
-        }
+        
 
         // Main code for drawing
         for (i = 0; i < totalElements - 1; i++) {
