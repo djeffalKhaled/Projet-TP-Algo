@@ -347,7 +347,7 @@ int main(void) {
         }
         
         // Delete Element at position Button
-        GuiSpinner((Rectangle){420, 400, 300, 50}, "", &deleteButtonValue, 1, totalElements - 1, false); 
+        GuiSpinner((Rectangle){420, 400, 300, 50}, "", &deleteButtonValue, 1, totalElements, false); 
         //DrawText("Position", deleteButton.x + 125, deleteButton.y - 70, 15, GRAY); 
           if (GuiButton(deleteButton, "Supprimer Position") && totalElements > 0) {
         // Delete the element at the specified position
