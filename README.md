@@ -2,19 +2,21 @@
 ## Trinôme
 Projet créé en collaboration :
 - BAKIRI Samy
-  - matricule:
+  - matricule: 222231361418
   - github: https://github.com/xlivan
 - BARAT Wassim
-  - matricule:
+  - matricule: 222231519406
   - github: https://github.com/Wassimbarat10
 - DJEFFAL Khaled Faiz
-  - matricule:
+  - matricule: 222231353316
   - github: https://github.com/djeffalKhaled
 
-## Description:
-Projet TP Algo créé avec RayLibs versione 4.5 en language C, il représente graphiquement l'algorithme de tri par insertion d'une liste chaînée.
+-> ISIL B Groupe 2
 
-<img src = "https://github.com/djeffalKhaled/Projet-TP-Algo/assets/143727646/dee27215-260b-44c2-8a4f-77f4599eb541">
+## Description:
+Projet TP Algo créé avec RayLib version 4.5 en langage C, il représente graphiquement l'algorithme de tri par insertion d'une liste doublement chaînée. Avec l'option de recherche, suppression, insertion, et toute aspect de modification d'une liste doublement chaînée.
+
+<img src = "https://github.com/djeffalKhaled/Projet-TP-Algo/assets/143727646/1d0e1270-0394-4026-ad52-972b76628049">
 
 ## Exécution du programme:
 Vous pouvez exécuter le programme via le fichier main.exe ou en téléchargeant les dépendances Raylib.
