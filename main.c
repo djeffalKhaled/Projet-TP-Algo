@@ -323,7 +323,7 @@ int main(void) {
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        DrawText("-> Crée in Raylib || Projet TP Algo", 20, 10, 14, LIGHTGRAY);
+        DrawText("-> Projet TP Algo || Créé dans Raylib", 20, 10, 15, LIGHTGRAY);
 
         // Sort Button
         if (GuiButton(sortButton, "Tri par Insertion") && totalElements > 0) {
