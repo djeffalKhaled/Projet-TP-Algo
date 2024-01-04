@@ -276,7 +276,7 @@ int main(void) {
     Timer timer;
     int deleteButtonValue = 1;
     int addPosition = 0;
-    int addElementValue = 0;
+    
     
     build_linked_list();
 
