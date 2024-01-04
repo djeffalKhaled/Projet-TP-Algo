@@ -75,7 +75,7 @@ typedef struct Node {
  Node* head = NULL;
  
  // Function that adds an element in given position
- void ajout_element_pos(Node** head, int element, int position) {
+void ajout_element_pos(Node** head, int element, int position) {
     if (position < 0 || position > totalElements) {
         printf("Invalid position\n");
         return;
@@ -83,26 +83,40 @@ typedef struct Node {
 
     Node* new_node = malloc(sizeof(Node));
     new_node->data = element;
+
     if (position == 0) {
         new_node->next = *head;
+        new_node->prev = NULL;
+
         if (*head != NULL) {
             (*head)->prev = new_node;
         }
+
         *head = new_node;
     } else {
         Node* current = *head;
+
         for (int i = 0; i < position - 1; i++) {
+            if (current == NULL) {
+                printf("Invalid position\n");
+                free(new_node);
+                return;
+            }
             current = current->next;
-        }new_node->next = current->next;
+        }
+
+        new_node->next = current->next;
         new_node->prev = current;
+
         if (current->next != NULL) {
             current->next->prev = new_node;
         }
+
         current->next = new_node;
     }
 
-     totalElements++;
- }
+    totalElements++;
+}
 
 
 // Function to build the linked list
@@ -292,18 +306,16 @@ int main(void) {
     }
 
     // Buttons
-    Rectangle searchButton = {50, 450, 300, 100};
-    Rectangle deleteButton = {400, 450, 300, 100};
-    Rectangle addButton = {750, 450, 300, 100};
-    Rectangle sortButton = {1100, 450, 300, 100};
+    Rectangle searchButton = {70, 450, 300, 100};
+    Rectangle deleteButton = {420, 450, 300, 100};
+    Rectangle addButton = {770, 450, 300, 100};
+    Rectangle sortButton = {1120, 450, 300, 100};
 
-    Rectangle addButtonValue = {750, 400, 300, 50};
-    Rectangle searchButtonValue = {50, 400, 300, 50};
+    Rectangle addButtonValue = {770, 400, 150, 50};
+    Rectangle searchButtonValue = {70, 400, 300, 50};
+    Rectangle addPositionInput = {920, 400, 150, 50};
 
-    Rectangle addPositionInput = {750, 500, 300, 50};
-    Rectangle addElementButton = {750, 550, 300, 50};
-
-    InitWindow(screenWidth, screenHeight, "Linked List Representation");
+    InitWindow(screenWidth, screenHeight, "Representation Liste Doublement Chainee");
     GuiSetStyle(DEFAULT, TEXT_SIZE, 25);
     SetTargetFPS(24);
 
@@ -311,9 +323,10 @@ int main(void) {
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        DrawText("-> Created in Raylib", 20, 10, 10, LIGHTGRAY);
+        DrawText("-> Crée in Raylib || Projet TP Algo", 20, 10, 14, LIGHTGRAY);
 
-        if (GuiButton(sortButton, "Insertion Sort") && totalElements > 0) {
+        // Sort Button
+        if (GuiButton(sortButton, "Tri par Insertion") && totalElements > 0) {
             tri_par_insertion(head);
 
             Rectangle deletion = {0, 0, 1300, 300};
@@ -326,55 +339,57 @@ int main(void) {
         GuiSpinner(addButtonValue, "", &addElementValue, -100, 100, true);
         GuiSpinner(searchButtonValue, "", &searchElementValue, -100, 100, false);
 
-        // Awaits for 1 second as green and then updates
-        if(GuiButton(searchButton, "Search Element")) {
+        // Search Element Button
+        if(GuiButton(searchButton, "Recherche Element")) {
             search_list_element(head, searchElementValue); 
             StartTimer(&timer, 1);
             ignoreTimer = true;
         }
-        UpdateTimer(&timer);
+        
+        // Delete Element at position Button
+        GuiSpinner((Rectangle){420, 400, 300, 50}, "", &deleteButtonValue, 1, totalElements - 1, false); 
+        //DrawText("Position", deleteButton.x + 125, deleteButton.y - 70, 15, GRAY); 
+          if (GuiButton(deleteButton, "Supprimer Position") && totalElements > 0) {
+        // Delete the element at the specified position
+        deleteElementAtPosition(deleteButtonValue-1);
+        updateListData(valColors, nextColors, lastColors);
+        }
+
+        // Add Element at position Button
+        GuiSpinner(addPositionInput, "", &addPosition, 0, totalElements, false);
+        DrawText("Position", addPositionInput.x + 45, addPositionInput.y - 20, 20, GRAY);
+        DrawText("Element", addButton.x + 45, addButton.y - 70, 20, GRAY);
+        if (GuiButton(addButton, "Ajouter Element") && totalElements < 8) {
+            char str[10];
+            sprintf(str, "%d", addElementValue);
+            ajout_element_pos(&head, addElementValue, addPosition);
+            updateListData(valColors, nextColors, lastColors);
+            recolor(addPosition, GREEN, DARKGREEN, DARKGREEN);
+            StartTimer(&timer, 1);
+            ignoreTimer = true;
+        }
+
+        // Code for Timer, it resets colors after 1 second
+        UpdateTimer(&timer); 
         if (TimerDone(&timer) && ignoreTimer) {
             updateListData(BLUE, DARKBLUE, DARKBLUE);
             ignoreTimer = false;
         }
 
-        if (GuiButton(addButton, "Add Element") && totalElements < 8) {
-            char str[10];
-            sprintf(str, "%d", addElementValue);
-            DrawText(str, 30, 20, 20, LIGHTGRAY);
-            ajout_element(&head, addElementValue);
-            updateListData(valColors, nextColors, lastColors);
-        }
-        GuiSpinner((Rectangle){400, 400, 300, 50}, "", &deleteButtonValue, 1, totalElements, false);  
-          if (GuiButton(deleteButton, "Delete Element") && totalElements > 0) {
-        // Delete the element at the specified position
-        deleteElementAtPosition(deleteButtonValue-1);
-        updateListData(valColors, nextColors, lastColors);
-        }
-        GuiSpinner(addPositionInput, "Position", &addPosition, 0, totalElements, false);
-        if (GuiButton(addElementButton, "Add Element at Position") && totalElements < 8) {
-            char str[10];
-            sprintf(str, "%d", addElementValue);
-            ajout_element_pos(&head, addElementValue, addPosition);
-            updateListData(valColors, nextColors, lastColors);
-        }
-
-        
-
         // Main code for drawing
         for (i = 0; i < totalElements - 1; i++) {
             if (i == 0) {
-                DrawText("Head", lists[i].x + 25, lists[i].y + 180, 20, GRAY);
+                DrawText("Tête", lists[i].x + 25, lists[i].y + 180, 20, GRAY);
             } 
             draw_ListGUI(&lists[i]);
         }
         // Deals with drawing the last element
         draw_last_ListGUI(&lists[totalElements - 1]);
         if (totalElements > 1) {
-            DrawText("Tail", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
+            DrawText("Queue", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
         }
         else if (totalElements == 1) {
-            DrawText("Head + Tail", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
+            DrawText("Tête + Queue", lists[totalElements - 1].x + 25, lists[totalElements - 1].y + 180, 20, GRAY);
         }
         EndDrawing();
     }
