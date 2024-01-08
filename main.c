@@ -14,7 +14,112 @@ typedef struct Node {
 
  int totalElements;
 
- //
+
+// Function to add an element to the linked list
+ void ajout_element(Node** tete_ref, int new_data) {
+     Node* new_node = (Node*)malloc(sizeof(Node));
+     new_node->data = new_data;
+     new_node->next = NULL;
+
+     if (*tete_ref == NULL) {
+         new_node->prev = NULL;
+         *tete_ref = new_node;
+     } else {
+         Node* last = *tete_ref;
+         while (last->next != NULL) {
+            last = last->next;
+        }
+        last->next = new_node;
+        new_node->prev = last;
+    }
+        totalElements++;
+ }
+
+ // Function to perform insertion sort on the linked list
+ void tri_par_insertion(Node* node) {
+     Node* Q = node->next;
+     Node* p = node;
+     Node* R = p;
+     int temp;
+     while (Q != NULL) {
+         temp = Q->data;
+         p = Q->prev;
+         while (p != NULL && temp < p->data) {
+             (p->next)->data = p->data;
+             R = p;
+             p = p->prev;
+         }
+         if (R->data > temp) {
+             R->data = temp;
+         }
+         Q = Q->next;
+     }
+ }
+
+ // Function to print the linked list
+ void printList(Node* node) {
+     while (node != NULL) {
+         printf("%d ", node->data);
+         node = node->next;
+     }
+     printf("\n");
+ }
+ 
+ // Function to free the memory allocated for the linked list
+ void freeList(Node* head) {
+    while (head != NULL) {
+         Node* temp = head;
+         head = head->next;
+         free(temp);
+     }
+ }
+ Node* head = NULL;
+ 
+ // Function that adds an element in given position
+void ajout_element_pos(Node** head, int element, int position) {
+    if (position < 0 || position > totalElements) {
+        printf("Invalid position\n");
+        return;
+    }
+
+    Node* new_node = malloc(sizeof(Node));
+    new_node->data = element;
+
+    if (position == 0) {
+        new_node->next = *head;
+        new_node->prev = NULL;
+
+        if (*head != NULL) {
+            (*head)->prev = new_node;
+        }
+
+        *head = new_node;
+    } else {
+        Node* current = *head;
+
+        for (int i = 0; i < position - 1; i++) {
+            if (current == NULL) {
+                printf("Invalid position\n");
+                free(new_node);
+                return;
+            }
+            current = current->next;
+        }
+
+        new_node->next = current->next;
+        new_node->prev = current;
+
+        if (current->next != NULL) {
+            current->next->prev = new_node;
+        }
+
+        current->next = new_node;
+    }
+
+    totalElements++;
+}
+
+
 
 // Function to build the linked list
 void build_linked_list() {
@@ -233,7 +338,7 @@ int main(void) {
             StartTimer(&timer, 1);
         }
 
-        //
+        GuiSpinner(addButtonValue, "", &addElementValue, -100, 100, true);
         GuiSpinner(searchButtonValue, "", &searchElementValue, -100, 100, false);
 
         // Search Element Button
@@ -252,7 +357,20 @@ int main(void) {
         updateListData(valColors, nextColors, lastColors);
         }
 
-   //
+        // Add Element at position Button
+        GuiSpinner(addPositionInput, "", &addPosition, 0, totalElements, false);
+        DrawText("Position", addPositionInput.x + 45, addPositionInput.y - 20, 20, GRAY);
+        DrawText("Element", addButton.x + 45, addButton.y - 70, 20, GRAY);
+        if (GuiButton(addButton, "Ajouter Element") && totalElements < 8) {
+            char str[10];
+            sprintf(str, "%d", addElementValue);
+            ajout_element_pos(&head, addElementValue, addPosition);
+            updateListData(valColors, nextColors, lastColors);
+            recolor(addPosition, GREEN, DARKGREEN, DARKGREEN);
+            addPosition++;
+            StartTimer(&timer, 1);
+            ignoreTimer = true;
+        }
 
         // Code for Timer, it resets colors after 1 second
         UpdateTimer(&timer); 
