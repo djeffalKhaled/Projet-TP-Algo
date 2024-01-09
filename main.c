@@ -365,12 +365,7 @@ int main(void) {
             char str[10];
             sprintf(str, "%d", addElementValue);
             ajout_element_pos(&head, addElementValue, addPosition);
-            updateListData(valColors, nextColors, lastColors);
-            recolor(addPosition, GREEN, DARKGREEN, DARKGREEN);
-            addPosition++;
-            StartTimer(&timer, 1);
-            ignoreTimer = true;
-        }
+
 
         // Code for Timer, it resets colors after 1 second
         UpdateTimer(&timer); 
