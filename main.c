@@ -361,7 +361,9 @@ int main(void) {
         GuiSpinner(addPositionInput, "", &addPosition, 0, totalElements, false);
         DrawText("Position", addPositionInput.x + 45, addPositionInput.y - 20, 20, GRAY);
         DrawText("Element", addButton.x + 45, addButton.y - 70, 20, GRAY);
-
+        if (GuiButton(addButton, "Ajouter Element") && totalElements < 8) {
+            char str[10];
+            sprintf(str, "%d", addElementValue);
             ajout_element_pos(&head, addElementValue, addPosition);
             updateListData(valColors, nextColors, lastColors);
             recolor(addPosition, GREEN, DARKGREEN, DARKGREEN);
